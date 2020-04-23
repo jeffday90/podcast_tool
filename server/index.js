@@ -1,26 +1,25 @@
 const express = require('express');
 const path = require('path');
 const Parser = require('rss-parser');
-const RSSfeeds = require('./rssFeeds')
-const model = require('./models/podcastReducer')
+const RSSfeeds = require('./rssFeeds');
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.static(path.join(__dirname, '../client/public')));
-app.listen(PORT, () => console.log('Listening on port: ' + PORT));
+app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
 
-const url = [];
+const sortedStreamsPodcasts = [];
 const parser = new Parser();
 
 const grabPodcasts = (podcasts) => {
   podcasts.forEach((podcast) => {
-    let links = [];
-    let episodes = [];
-    let totalEpisodes = [];
+    const links = [];
+    const episodes = [];
+    let totalEpisodes = 0;
 
-    let patreon = podcast.patreon_RSS
-    let free = podcast.free_RSS
+    const patreon = podcast.patreon_RSS;
+    const free = podcast.free_RSS;
     links.push(patreon);
     links.push(free);
 
@@ -32,15 +31,19 @@ const grabPodcasts = (podcasts) => {
             episodes.push(entry);
           });
           // TODO: refactor
-          totalEpisodes.push(episodes)
-          if (totalEpisodes.length === 2) {
-              model.combinePodcasts(episodes);
+          totalEpisodes += 1;
+          if (totalEpisodes === 2) {
+            episodes.sort((a, b) => Date.parse(b.pubDate) - Date.parse(a.pubDate));
+            sortedStreamsPodcasts.push(episodes);
           }
         });
       })();
-    })
-  })
+    });
+  });
 };
 
+app.get('/podcasts', (req, res) => {
+  res.send(sortedStreamsPodcasts);
+});
 
 grabPodcasts(RSSfeeds.RSSFeeds);

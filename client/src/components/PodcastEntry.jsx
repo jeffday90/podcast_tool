@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import {
   Button, Card, CardContent, makeStyles, Typography, Grid,
@@ -35,7 +35,7 @@ const play = () => {
 
 // move to another server file
 
-const PodcastEntry = () => {
+const PodcastEntry = ({ podcast }) => {
   const classes = useStyles();
   return (
     <Grid
@@ -48,7 +48,9 @@ const PodcastEntry = () => {
       <Card className={classes.root}>
         <CardContent>
           <Typography color="primary" className={classes.title} variant="h5">
-            Title: 'something dynamic'
+            Title:
+            {' '}
+            {podcast.title}
           </Typography>
           <Button onClick={play}>
             Play item

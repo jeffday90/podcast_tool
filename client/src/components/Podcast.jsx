@@ -1,15 +1,11 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PodcastEntry from './PodcastEntry.jsx'
+import PodcastEntry from './PodcastEntry.jsx';
 
-class Podcast extends React.Component {
-    render() {
-      return (
-        <div>
-            <PodcastEntry />
-        </div>
-      );
-    }
-  }
-  
-  export default Podcast;
+const Podcast = ({ podcasts }) => (
+  <div>
+    {podcasts.map((podcast) => <PodcastEntry podcast={podcast} />)}
+  </div>
+);
 
+export default Podcast;

@@ -17,15 +17,10 @@ const useStyles = makeStyles({
   },
 });
 
-
-// move to a separate file
-const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-
-
 // needs to be attached to this file, play function
 const play = () => {
   const sound = new Howl({
-    src: [CORS_PROXY + url[0]],
+    // src: [url[0]],
     autoplay: true,
     // there is an issue with html5 and cors that doesn't let it play without fully loading
     // html5: true,

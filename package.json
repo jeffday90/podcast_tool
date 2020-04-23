@@ -24,13 +24,11 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.1",
-    "regenerator-runtime": "^0.13.5",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.11",
-    "@babel/polyfill": "^7.8.7",
     "axios": "^0.19.2",
     "express": "^4.17.1",
     "howler": "^2.1.3",

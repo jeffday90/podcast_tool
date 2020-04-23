@@ -1,0 +1,48 @@
+{
+  "name": "podcast-patreon",
+  "version": "1.0.0",
+  "description": "Podcast app for me!!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "react-dev": "webpack -w",
+    "start": "nodemon ./server/index.js"
+  },
+  "repository": {
+    "url": "https://github.com/jeffday90/podcast-patreon.git"
+  },
+  "author": "Jeff Day",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "regenerator-runtime": "^0.13.5",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.9.11",
+    "@babel/polyfill": "^7.8.7",
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "howler": "^2.1.3",
+    "nodemon": "^2.0.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rss-parser": "^3.7.6"
+  },
+  "babel": {
+    "presets": [
+      "@babel/env",
+      "@babel/react"
+    ]
+  }
+}

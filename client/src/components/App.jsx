@@ -3,7 +3,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/no-unused-state */
 import React from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import Axios from 'axios';
 import { Howl } from 'howler';
 
@@ -31,8 +31,10 @@ class App extends React.Component {
         thumbnail: '',
       }],
       loaded: false,
+      isPlaying: false,
+      currentlyPlaying: '',
     };
-    this.play = this.play.bind(this);
+    this.player = this.player.bind(this);
   }
 
   async componentDidMount() {
@@ -61,23 +63,30 @@ class App extends React.Component {
         this.setState({
           podcasts: newState,
           loaded: true,
-        }, () => console.log(this.state));
+        });
       });
   }
 
-  play(url) {
-    const sound = new Howl({
-      src: [url],
-      autoplay: true,
-      // there is an issue with html5 and cors that doesn't let it play without fully loading
-      html5: true,
-      onload() {
-        // do something to the UI when this fires to signify that it's done
-        console.log('done loading');
-      },
-    });
-      // Sounds.play();
-    console.log('sound');
+  player(url) {
+    const { isPlaying, currentlyPlaying } = this.state;
+
+    if (!isPlaying && !currentlyPlaying) {
+      const sound = new Howl({
+        src: [url],
+        autoplay: true,
+        html5: true,
+      });
+
+      this.setState({
+        isPlaying: !isPlaying,
+        currentlyPlaying: sound,
+      });
+    } else if (isPlaying && currentlyPlaying) {
+      currentlyPlaying.pause();
+    }
+    // else if (!isPlaying && currentPodcast) {
+    //   currentPodcast.pause();
+    // }
   }
 
 
@@ -94,7 +103,7 @@ class App extends React.Component {
           </Typography>
           )}
         { loaded
-          && <Podcast podcasts={podcasts} play={this.play} />}
+          && <Podcast podcasts={podcasts} player={this.player} />}
       </div>
     );
   }
@@ -122,14 +131,12 @@ class App extends React.Component {
 // list
 // player
 
-// keep the player in this layer?
-
 // DONE
 // figure out how to attach RSS feed that updates
 // fetch RSS feed whenever app opens, this will always have
 // RSS
 // figure out the data model that organizes podcast by release date
 // can't use ID, use the release date
-
+// keep the player in this layer?
 
 export default withRoot(App);

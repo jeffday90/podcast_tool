@@ -3,7 +3,8 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/no-unused-state */
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography, Card, CircularProgress } from '@material-ui/core';
+import styled from 'styled-components';
 import Axios from 'axios';
 // import { Howl } from 'howler';
 import ReactHowler from 'react-howler';
@@ -95,6 +96,7 @@ class App extends React.Component {
         isPlaying: true,
       });
     } else if (!isPlaying && !alreadyPlaying) {
+      // isn't playing and new URL
       this.setState({
         isPlaying: false,
         podcastURL: concatenatedURL,
@@ -114,20 +116,38 @@ class App extends React.Component {
           playing={isPlaying}
           // html5
         />
-        <Title />
         { !loaded
           && (
-          <Typography>
-            {' '}
-            shhh... don&apos;t tell anyone....
-          </Typography>
+            <OpenCard>
+              <Typography>
+                shhh... don&apos;t tell anyone....
+              </Typography>
+              <Loading />
+            </OpenCard>
           )}
         { loaded
-          && <Podcast podcasts={podcasts} player={this.player} isPlaying={isPlaying} />}
+          && (
+            <Podcast podcasts={podcasts} player={this.player} isPlaying={isPlaying} />
+          )}
       </div>
     );
   }
 }
+
+const OpenCard = styled(Card)`
+  margin-left: 2em;
+  margin-right: 2em;
+  margin-top: 20vh;
+  text-align: center;
+  padding-top: 5vh;
+  font-size: 1.5em;
+  padding-bottom: 10vh;
+`;
+
+const Loading = styled(CircularProgress)`
+  margin-top: 20vh;
+  color: black;
+`;
 
 // title: "Episode 63: Exiled on Main Street"
 // link: "https://www.patreon.com/posts/episode-63-on-36359715"

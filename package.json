@@ -40,7 +40,8 @@
     "react-dom": "^16.13.1",
     "react-howler": "^3.7.4",
     "react-use-audio-player": "0.0.17",
-    "rss-parser": "^3.7.6"
+    "rss-parser": "^3.7.6",
+    "styled-components": "^5.1.0"
   },
   "babel": {
     "presets": [

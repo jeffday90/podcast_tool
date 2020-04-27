@@ -1,4 +1,4 @@
-As a big fan of podcasts, I support a few through monthly donations/subscriptions via Patreon.  This gets me at least one additonal episode per week, which I love!  However, I find myself constantly going between platforms to listen to both the free and the premium content, so I decided to make an application that aggregates RSS feeds.
+As a big fan of podcasts, I support a few through monthly donations/subscriptions via Patreon.  This gets me at least one additonal episode per week, which I love!  However, I find myself constantly going between platforms to listen to both the free and the premium content, so I decided to make an application that aggregates RSS feeds and presents the results in a React based front end.
 
 START APPLICATION:
 - npm install

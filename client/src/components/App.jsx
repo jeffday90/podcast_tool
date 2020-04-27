@@ -5,7 +5,8 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import Axios from 'axios';
-import { Howl } from 'howler';
+// import { Howl } from 'howler';
+import ReactHowler from 'react-howler';
 
 import Podcast from './Podcast.jsx';
 import Title from './Title.jsx';
@@ -32,7 +33,7 @@ class App extends React.Component {
       }],
       loaded: false,
       isPlaying: false,
-      currentlyPlaying: '',
+      podcastURL: '',
     };
     this.player = this.player.bind(this);
   }
@@ -68,32 +69,51 @@ class App extends React.Component {
   }
 
   player(url) {
-    const { isPlaying, currentlyPlaying } = this.state;
+    const { isPlaying, podcastURL } = this.state;
 
-    if (!isPlaying && !currentlyPlaying) {
-      const sound = new Howl({
-        src: [url],
-        autoplay: true,
-        html5: true,
-      });
+    // create proxy url => maybe need to rework as HTML5 doesn't work with this
+    const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+    const concatenatedURL = CORS_PROXY + url;
 
+    // check if the passed in URL is the same as the current (so this would be play)
+    const alreadyPlaying = (podcastURL === concatenatedURL);
+
+    if (!isPlaying && podcastURL === '') {
+      // nothing has played yet and there is no link
       this.setState({
-        isPlaying: !isPlaying,
-        currentlyPlaying: sound,
+        isPlaying: true,
+        podcastURL: concatenatedURL,
       });
-    } else if (isPlaying && currentlyPlaying) {
-      currentlyPlaying.pause();
+    } else if (isPlaying && alreadyPlaying) {
+      // playing and already been clicked (pause)
+      this.setState({
+        isPlaying: false,
+      });
+    } else if (!isPlaying && alreadyPlaying) {
+      // isn't playing and same url
+      this.setState({
+        isPlaying: true,
+      });
+    } else if (!isPlaying && !alreadyPlaying) {
+      this.setState({
+        isPlaying: false,
+        podcastURL: concatenatedURL,
+      });
     }
-    // else if (!isPlaying && currentPodcast) {
-    //   currentPodcast.pause();
-    // }
   }
 
 
   render() {
-    const { podcasts, loaded } = this.state;
+    const {
+      podcasts, loaded, podcastURL, isPlaying,
+    } = this.state;
     return (
       <div>
+        <ReactHowler
+          src={[podcastURL]}
+          playing={isPlaying}
+          // html5
+        />
         <Title />
         { !loaded
           && (
@@ -103,7 +123,7 @@ class App extends React.Component {
           </Typography>
           )}
         { loaded
-          && <Podcast podcasts={podcasts} player={this.player} />}
+          && <Podcast podcasts={podcasts} player={this.player} isPlaying={isPlaying} />}
       </div>
     );
   }

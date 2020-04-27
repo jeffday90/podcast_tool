@@ -16,12 +16,20 @@ class EpisodesEntry extends React.Component {
 
   handleClick(link) {
     const { player } = this.props;
-    player(link);
-    this.setState({
-      isPlaying: true,
-    });
-  }
+    const { isPlaying } = this.state;
 
+    player(link);
+
+    if (!isPlaying) {
+      this.setState({
+        isPlaying: true,
+      });
+    } else {
+      this.setState({
+        isPlaying: false,
+      });
+    }
+  }
 
   render() {
     const { title, link } = this.props;
@@ -31,8 +39,8 @@ class EpisodesEntry extends React.Component {
         {title}
         {/* on click play link
     this method will be passed down from the app, where the play will be handled */}
-        <Button>
-          { !isPlaying && <PlayArrowIcon onClick={() => this.handleClick(link)} />}
+        <Button onClick={() => this.handleClick(link)}>
+          { !isPlaying && <PlayArrowIcon />}
           { isPlaying && <PauseIcon />}
         </Button>
       </div>

@@ -6,32 +6,19 @@ import React from 'react';
 import { Typography, Card, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import Axios from 'axios';
-// import { Howl } from 'howler';
 import ReactHowler from 'react-howler';
 
 import Podcast from './Podcast.jsx';
-import Title from './Title.jsx';
 import withRoot from '../withRoot.jsx';
+import TrueAnonImage from '../images/true_anon.png';
+import YBS from '../images/ybs.png';
+import ChapoImage from '../images/chapo.png';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      podcasts: [{
-        title: 'Yeah, But Still',
-        episodes: [],
-        thumbnail: '',
-      },
-      {
-        title: 'TrueAnon',
-        episodes: [],
-        thumbnail: '',
-      },
-      {
-        title: 'Chapo Trap House',
-        episodes: [],
-        thumbnail: '',
-      }],
+      podcasts: [],
       loaded: false,
       isPlaying: false,
       podcastURL: '',
@@ -42,28 +29,30 @@ class App extends React.Component {
   async componentDidMount() {
     // bug: does the podcast.data array always organize in this order?
     // maybe need to figure out a method that properly matches
+
     Axios.get('/podcasts')
       .then((podcast) => {
-        const newState = [{
-          title: 'TrueAnon',
-          episodes: podcast.data[0],
-          thumbnail: '',
-          id: 1,
+        const loadedPodcast = [{
+          title: podcast.data[0].title,
+          episodes: podcast.data[0].episodes,
+          image: TrueAnonImage,
+          id: podcast.data[0].id,
         },
         {
-          title: 'Chapo Trap House',
-          episodes: podcast.data[1],
-          thumbnail: '',
-          id: 2,
+          title: podcast.data[1].title,
+          episodes: podcast.data[1].episodes,
+          image: ChapoImage,
+          id: podcast.data[1].id,
         },
         {
-          title: 'Yeah, But Still',
-          episodes: podcast.data[2],
-          thumbnail: '',
-          id: 3,
+          title: podcast.data[2].title,
+          episodes: podcast.data[2].episodes,
+          image: YBS,
+          id: podcast.data[2].id,
         }];
+
         this.setState({
-          podcasts: newState,
+          podcasts: loadedPodcast,
           loaded: true,
         });
       });

@@ -1,3 +1,7 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable import/extensions */
 /* eslint-disable react/prop-types */
@@ -64,8 +68,9 @@ class PodcastEntry extends React.Component {
         {/* // className={classes.root}> */}
         <CardContent>
           <TitleContainer>
+            <img style={imageStyle} src={podcast.image} />
+            <Title>{podcast.title}</Title>
             {/* </Typography> color="primary" className={classes.title} variant="h5"> */}
-            {podcast.title}
             <PlayPauseButton onClick={() => this.handleClick(podcast.episodes[0].enclosure.url)}>
               {!isPlaying
               && <PlayArrowIcon />}
@@ -82,6 +87,12 @@ class PodcastEntry extends React.Component {
   }
 }
 
+const imageStyle = {
+  height: '12vh',
+  width: '12vh',
+  display: 'inline-block',
+};
+
 const PodcastCard = styled(Card)`
   margin-left: 2em;
   margin-right: 2em;
@@ -90,16 +101,30 @@ const PodcastCard = styled(Card)`
 
 // need space between border and title/button
 const TitleContainer = styled.div`
-  border-bottom: 2px solid black;
+  margin-left: 2vh;
+  margin-right: 2vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Title = styled(Typography)`
+  font-size: 1.7em;
+  justify-content: center;
+  align-items: center;
+  display: inline-block;
 `;
 
 const EpisodesContainer = styled.div`
   margin-top: 1em;
   /* overflow: 'auto'; */
+  border: 2px solid black;
 `;
 
 const PlayPauseButton = styled(Button)`
-  text-align: right;
+  /* float: right; */
+  /* margin-top: 10vh; */
+  display: inline-block;
 `;
 
 export default PodcastEntry;

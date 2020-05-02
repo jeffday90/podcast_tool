@@ -17,6 +17,7 @@ const grabPodcasts = (podcasts) => {
     const links = [];
     const episodes = [];
     let totalEpisodes = 0;
+    const podcastArr = ['TrueAnon', 'Chapo Trap House', 'Yeah, But Still'];
 
     const patreon = podcast.patreon_RSS;
     const free = podcast.free_RSS;
@@ -34,7 +35,12 @@ const grabPodcasts = (podcasts) => {
           totalEpisodes += 1;
           if (totalEpisodes === 2) {
             episodes.sort((a, b) => Date.parse(b.pubDate) - Date.parse(a.pubDate));
-            sortedStreamsPodcasts.push(episodes);
+            const podcastInfo = {
+              id: sortedStreamsPodcasts.length + 1,
+              title: podcastArr[sortedStreamsPodcasts.length],
+              episodes,
+            };
+            sortedStreamsPodcasts.push(podcastInfo);
           }
         });
       })();

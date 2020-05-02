@@ -11,8 +11,10 @@ class EpisodesEntry extends React.Component {
     super(props);
     this.state = {
       isPlaying: false,
+      isDisplayingEpisodeInfo: false,
     };
     this.handleClick = this.handleClick.bind(this);
+    this.showEpisodeInfo = this.showEpisodeInfo.bind(this);
   }
 
   handleClick(link) {
@@ -32,11 +34,18 @@ class EpisodesEntry extends React.Component {
     }
   }
 
+  showEpisodeInfo() {
+    const { isDisplayingEpisodeInfo } = this.state;
+    this.setState({
+      isDisplayingEpisodeInfo: !isDisplayingEpisodeInfo,
+    });
+  }
+
   render() {
-    const { title, link } = this.props;
-    const { isPlaying } = this.state;
+    const { title, link, content } = this.props;
+    const { isPlaying, isDisplayingEpisodeInfo } = this.state;
     return (
-      <EpisodeListItem>
+      <EpisodeListItem onClick={() => this.showEpisodeInfo()}>
         {title}
         {/* on click play link
     this method will be passed down from the app, where the play will be handled */}
@@ -44,15 +53,24 @@ class EpisodesEntry extends React.Component {
           { !isPlaying && <PlayArrowIcon />}
           { isPlaying && <PauseIcon />}
         </PlayPauseButton>
+        {/* modal show the episode info as a pop up card
+        also need to write a method to detect whether content has html */}
+        { isDisplayingEpisodeInfo
+          && <div>{content}</div>}
       </EpisodeListItem>
     );
   }
 }
 
-const EpisodeListItem = styled(ListItem)``;
+const EpisodeListItem = styled(ListItem)`
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+  margin-right: 2em;
+`;
 
 const PlayPauseButton = styled(Button)`
-  align-content: right;
+  /* align-content: right; */
 `;
 
 

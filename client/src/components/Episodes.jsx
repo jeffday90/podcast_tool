@@ -13,6 +13,7 @@ const Episodes = ({ episodes, player }) => (
         key={episode.guid}
         title={episode.title}
         link={episode.enclosure.url}
+        content={episode.content}
         // curious whether i need to pass down below func
         player={player}
       />

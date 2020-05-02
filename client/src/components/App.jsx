@@ -30,12 +30,21 @@ class App extends React.Component {
     // bug: does the podcast.data array always organize in this order?
     // maybe need to figure out a method that properly matches
 
+    const enforceImage = (title) => {
+      if (title === 'TrueAnon') {
+        return TrueAnonImage;
+      } if (title === 'Chapo Trap House') {
+        return ChapoImage;
+      }
+      return YBS;
+    };
+
     Axios.get('/podcasts')
       .then((podcast) => {
         const loadedPodcast = [{
           title: podcast.data[0].title,
           episodes: podcast.data[0].episodes,
-          image: TrueAnonImage,
+          image: enforceImage(podcast.data[0].title),
           id: podcast.data[0].id,
         },
         {
